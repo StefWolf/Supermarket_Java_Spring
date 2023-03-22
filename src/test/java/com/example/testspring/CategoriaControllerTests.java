@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.example.testspring.model.ProdutosCategoria;
 import com.example.testspring.service.CategoriaService;
@@ -49,6 +50,14 @@ class CategoriaControllerTests {
 		Mockito.when(categoriaService.findAllCategorias()).thenReturn(categorias);
 		this.mockMvc.perform(get("/"+path+"/listar")).andDo(print())
 											.andExpect(status().isOk());
+	}
+	
+	@Test
+	void salvarTest() throws Exception {
+		ProdutosCategoria produto = novaCategoria();
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/"+path+"/salvar"))
+		.andExpect(status().isCreated());
 	}
 	
 }
